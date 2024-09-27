@@ -18,15 +18,14 @@ jobs:
           docker build -t myappbruh-be:latest ./backend
           docker build -t myappbruh-fe:latest ./frontend
 
-      - name: Source bashrc and Deploy to Minikube
+      - name: Deploy to Minikube
         run: |
-          source ~/.bashrc
-          kubectl apply -f backend/deployment.yaml
-          kubectl apply -f backend/service.yaml
-          kubectl apply -f frontend/deployment.yaml
-          kubectl apply -f frontend/service.yaml
+          minikube kubectl -- apply -f backend/deployment.yaml
+          minikube kubectl -- apply -f backend/service.yaml
+          minikube kubectl -- apply -f frontend/deployment.yaml
+          minikube kubectl -- apply -f frontend/service.yaml
 
       - name: Verify deployment
         run: |
-          kubectl rollout status deployment/myappbruh-be
-          kubectl rollout status deployment/myappbruh-fe
+          minikube kubectl -- rollout status deployment/myappbruh-be
+          minikube kubectl -- rollout status deployment/myappbruh-fe
