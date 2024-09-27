@@ -27,8 +27,8 @@ jobs:
 
       - name: Delete existing pods
         run: |
-          minikube kubectl delete pod myappbruh-be-*
-          minikube kubectl delete pod myappbruh-fe-*
+          minikube delete pod -l app=myappbruh-be
+          minikube delete pod -l app=myappbruh-fe
 
       - name: Verify deployment
         run: |
