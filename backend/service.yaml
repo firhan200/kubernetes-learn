@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myappbruh-be
+spec:
+  selector:
+    app: myappbruh-be
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 3901
+      targetPort: 3901

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myappbruh-fe
+spec:
+  selector:
+    app: myappbruh-fe
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5173
+      targetPort: 5173
