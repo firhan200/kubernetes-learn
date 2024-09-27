@@ -12,14 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
-
-      # - name: Configure kubectl
-      #   run: |
-      #     mkdir -p $HOME/.kube
-      #     echo "$KUBE_CONFIG" | base64 --decode > $HOME/.kube/config
-
       - name: Build Docker images
         run: |
           eval $(minikube docker-env)
