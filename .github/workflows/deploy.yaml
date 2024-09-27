@@ -1,0 +1,42 @@
+name: Build and Deploy to Minikube
+
+on:
+  push:
+    branches: [main]
+
+env:
+  KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+
+      # - name: Configure kubectl
+      #   run: |
+      #     mkdir -p $HOME/.kube
+      #     echo "$KUBE_CONFIG" | base64 --decode > $HOME/.kube/config
+
+      - name: Build Docker images
+        run: |
+          eval $(minikube docker-env)
+          docker build -t myappbruh-be:latest ./backend
+          docker build -t myappbruh-fe:latest ./frontend
+
+      - name: Deploy to Minikube
+        run: |
+          kubectl apply -f backend/deployment.yaml
+          kubectl apply -f backend/service.yaml
+          kubectl apply -f frontend/deployment.yaml
+          kubectl apply -f frontend/service.yaml
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/myappbruh-be
+          kubectl rollout status deployment/myappbruh-fe
