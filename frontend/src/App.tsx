@@ -3,7 +3,7 @@ import './App.css'
 function App() {
   return (
     <>
-      Hello From Frontend
+      Hello From Frontend - Changes from feature/DEV-00001
     </>
   )
 }
